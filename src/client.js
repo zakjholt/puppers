@@ -1,19 +1,26 @@
 // Api client
 export class DogCeoClient {
-  _baseUrl = "https://dog.ceo/api";
+  constructor() {
+    this._baseUrl = "https://dog.ceo/api";
+    this._get = this._get.bind(this);
+    this.getBreedOptions = this.getBreedOptions.bind(this);
+    this.getRandomBreedImageUrl = this.getRandomBreedImageUrl.bind(this);
+  }
 
-  _get = (url) => fetch(`${this._baseUrl}${url}`);
+  _get(url) {
+    return fetch(`${this._baseUrl}${url}`);
+  }
 
-  getBreedOptions = async () => {
+  async getBreedOptions() {
     const breedResponse = await this._get("/breeds/list/all");
     const breedData = await breedResponse.json();
     return Object.keys(breedData.message).map((n) => ({ label: n, value: n }));
-  };
+  }
 
-  getRandomBreedImageUrl = async (breedName) => {
+  async getRandomBreedImageUrl(breedName) {
     const response = await this._get(`/breed/${breedName}/images/random`);
     const data = await response.json();
 
     return data.message;
-  };
+  }
 }

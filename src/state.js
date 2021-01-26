@@ -6,26 +6,31 @@ export class State {
   constructor({ client, onStateChange = () => {} }) {
     this.client = client;
     this.onStateChange = onStateChange;
+    this._state = {
+      breedOptions: [],
+      selectedBreedValue: "shiba",
+      currentPhoto: undefined,
+      previousPhotos: [],
+      breedsModalOpen: false,
+    };
+
+    this.generateNextState = this.generateNextState.bind(this);
+    this.onBreedSelect = this.onBreedSelect.bind(this);
+    this.onNewPicButtonClick = this.onNewPicButtonClick.bind(this);
+    this.getNewPhotoData = this.getNewPhotoData.bind(this);
+    this.toggleBreedsModal = this.toggleBreedsModal.bind(this);
+    this.onBreedOptionImgClick = this.onBreedOptionImgClick.bind(this);
+    this.onPreviousPhotoClick = this.onPreviousPhotoClick.bind(this);
   }
 
-  _state = {
-    breedOptions: [],
-    selectedBreedValue: "shiba",
-    currentPhoto: undefined,
-    previousPhotos: [],
-    breedsModalOpen: false,
-  };
-
-  getState = () => this._state;
-
-  generateNextState = (newState) => {
+  generateNextState(newState) {
     const nextState = { ...this._state, ...newState };
 
     this._state = nextState;
     this.onStateChange(this._state);
-  };
+  }
 
-  onBreedSelect = async (event) => {
+  async onBreedSelect(event) {
     const breedName = event.target.value;
 
     const newPhotoData = await this.getNewPhotoData(breedName);
@@ -36,14 +41,14 @@ export class State {
     };
 
     this.generateNextState(newState);
-  };
+  }
 
-  onNewPicButtonClick = async () => {
+  async onNewPicButtonClick() {
     const newPhotoData = await this.getNewPhotoData();
     this.generateNextState(newPhotoData);
-  };
+  }
 
-  getNewPhotoData = async (breedName = this._state.selectedBreedValue) => {
+  async getNewPhotoData(breedName = this._state.selectedBreedValue) {
     const breedImageUrl = await this.client.getRandomBreedImageUrl(breedName);
 
     const photoObj = {
@@ -65,15 +70,15 @@ export class State {
     }
 
     return newState;
-  };
+  }
 
-  toggleBreedsModal = () => {
+  toggleBreedsModal() {
     const { breedsModalOpen } = this._state;
 
     this.generateNextState({ breedsModalOpen: !breedsModalOpen });
-  };
+  }
 
-  onBreedOptionImgClick = (event) => {
+  onBreedOptionImgClick(event) {
     event.stopPropagation();
 
     this.generateNextState({
@@ -84,9 +89,9 @@ export class State {
       },
       selectedBreedValue: event.target.value,
     });
-  };
+  }
 
-  onPreviousPhotoClick = (e) => {
+  onPreviousPhotoClick(e) {
     const photoUrl = e.target.src;
     const photoObj = this._state.previousPhotos.find(
       (po) => po.url === photoUrl
@@ -99,5 +104,5 @@ export class State {
       currentPhoto: photoObj,
       previousPhotos: nextPreviousPhotos,
     });
-  };
+  }
 }
