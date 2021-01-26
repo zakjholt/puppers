@@ -1,0 +1,114 @@
+.nav__links {
+  list-style: none;
+  padding-left: none;
+  display: flex;
+}
+
+.nav__links__link {
+  cursor: pointer;
+}
+
+main {
+  text-align: center;
+}
+
+.breed_select_container {
+  margin-bottom: 10px;
+}
+
+.breeds_modal_button {
+  margin-bottom: 40px;
+}
+
+.photo_container {
+  width: 500px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+.photo_container img {
+  height: 250px;
+}
+
+.previous_photos_container {
+  margin-top: 10px;
+  width: 500px;
+  height: 250px;
+  display: flex;
+}
+
+.previous_photos_container img {
+  height: 50px;
+  margin-right: 10px;
+  opacity: 0.3;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.previous_photos_container img:hover {
+  height: 60px;
+  opacity: 1;
+}
+
+.previous_photos_container img:last-child {
+  margin-right: 0;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.breeds_modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.breeds_modal__overlay {
+  background: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.breeds_modal__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+  grid-row-gap: 10px;
+}
+
+.breeds_modal__grid div {
+  position: relative;
+  height: 200px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.breeds_modal__grid img {
+  height: 100%;
+}
+
+.breeds_modal__grid div .label {
+  opacity: 0;
+  position: absolute;
+  transition: all 0.2s ease-in-out;
+  top: 50%;
+  left: 10px;
+}
+
+.breeds_modal__grid div:hover {
+  height: 210px;
+}
+
+.breeds_modal__grid div:hover img {
+  opacity: 0.3;
+}
+
+.breeds_modal__grid div:hover .label {
+  opacity: 1;
+}

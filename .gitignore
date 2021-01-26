@@ -1,0 +1,6 @@
+# Node deps
+node_modules
+# Parcel cache
+.cache
+# Build dir
+dist
